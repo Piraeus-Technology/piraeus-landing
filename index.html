@@ -11,14 +11,14 @@
   <meta property="og:url" content="https://piraeus.app">
   <meta property="og:type" content="website">
   <meta name="twitter:card" content="summary_large_image">
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='12' fill='%230d1b2a'/><text x='32' y='42' text-anchor='middle' font-family='Arial' font-size='32' font-weight='bold' fill='white'>P</text></svg>">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='12' fill='%231E2A44'/><text x='32' y='42' text-anchor='middle' font-family='Inter,Arial' font-size='32' font-weight='600' fill='white'>P</text></svg>">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
-      font-family: 'Inter', -apple-system, sans-serif;
-      background: #0d1b2a;
+      font-family: 'Inter', -apple-system, 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif;
+      background: #1E2A44;
       color: #ffffff;
       min-height: 100vh;
       display: flex;
@@ -28,7 +28,6 @@
       position: relative;
     }
 
-    /* Animated network background */
     canvas {
       position: fixed;
       top: 0;
@@ -45,33 +44,16 @@
       padding: 40px 24px;
     }
 
-    /* Logo */
-    .logo-icon {
-      display: inline-block;
-      margin-bottom: 32px;
-    }
-
-    .logo-text {
-      font-size: clamp(48px, 8vw, 80px);
-      font-weight: 600;
-      letter-spacing: -0.02em;
-      line-height: 1;
-      margin-bottom: 8px;
-    }
-
-    .logo-sub {
-      font-size: clamp(14px, 2.5vw, 20px);
-      font-weight: 400;
-      letter-spacing: 0.3em;
-      text-transform: uppercase;
-      opacity: 0.7;
-      margin-bottom: 40px;
+    .logo-img {
+      max-width: min(480px, 85vw);
+      height: auto;
+      margin-bottom: 48px;
     }
 
     .tagline {
-      font-size: clamp(18px, 3vw, 24px);
+      font-size: clamp(16px, 2.5vw, 22px);
       font-weight: 300;
-      color: #7eb8c9;
+      color: rgba(255, 255, 255, 0.6);
       letter-spacing: 0.02em;
     }
 
@@ -82,9 +64,8 @@
       animation: fadeIn 1s ease-out forwards;
     }
 
-    .fade-in:nth-child(2) { animation-delay: 0.2s; }
-    .fade-in:nth-child(3) { animation-delay: 0.4s; }
-    .fade-in:nth-child(4) { animation-delay: 0.6s; }
+    .fade-in-delay-1 { animation-delay: 0.3s; }
+    .fade-in-delay-2 { animation-delay: 0.6s; }
 
     @keyframes fadeIn {
       to {
@@ -94,26 +75,26 @@
     }
 
     .contact {
-      margin-top: 60px;
+      margin-top: 56px;
       opacity: 0;
-      animation: fadeIn 1s ease-out 1s forwards;
+      animation: fadeIn 1s ease-out 0.9s forwards;
     }
 
     .contact a {
-      color: #7eb8c9;
+      color: #4DA3FF;
       text-decoration: none;
       font-size: 14px;
-      font-weight: 400;
-      letter-spacing: 0.05em;
-      padding: 10px 24px;
-      border: 1px solid rgba(126, 184, 201, 0.3);
+      font-weight: 500;
+      letter-spacing: 0.03em;
+      padding: 10px 28px;
+      border: 1px solid rgba(77, 163, 255, 0.3);
       border-radius: 999px;
       transition: all 0.3s ease;
     }
 
     .contact a:hover {
-      background: rgba(126, 184, 201, 0.1);
-      border-color: rgba(126, 184, 201, 0.6);
+      background: rgba(77, 163, 255, 0.1);
+      border-color: rgba(77, 163, 255, 0.6);
     }
   </style>
 </head>
@@ -121,24 +102,11 @@
   <canvas id="network"></canvas>
 
   <div class="content">
-    <!-- Logo icon -->
-    <div class="fade-in logo-icon">
-      <svg width="72" height="72" viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <rect x="8" y="12" width="40" height="48" rx="2" stroke="white" stroke-width="4" fill="none"/>
-        <rect x="32" y="12" width="24" height="32" rx="2" fill="white" opacity="0.9"/>
-        <rect x="24" y="12" width="4" height="48" fill="#0d1b2a"/>
-      </svg>
+    <div class="fade-in">
+      <img src="logo.png" alt="Piraeus Technology" class="logo-img">
     </div>
 
-    <div class="fade-in">
-      <h1 class="logo-text">Piraeus</h1>
-    </div>
-
-    <div class="fade-in">
-      <p class="logo-sub">Technology</p>
-    </div>
-
-    <div class="fade-in">
+    <div class="fade-in fade-in-delay-1">
       <p class="tagline">Software for modern life</p>
     </div>
 
@@ -176,7 +144,6 @@
     function draw() {
       ctx.clearRect(0, 0, w, h);
 
-      // Draw connections
       for (let i = 0; i < particles.length; i++) {
         for (let j = i + 1; j < particles.length; j++) {
           const dx = particles[i].x - particles[j].x;
@@ -186,32 +153,29 @@
             ctx.beginPath();
             ctx.moveTo(particles[i].x, particles[i].y);
             ctx.lineTo(particles[j].x, particles[j].y);
-            ctx.strokeStyle = `rgba(126, 184, 201, ${0.15 * (1 - dist / 180)})`;
+            ctx.strokeStyle = `rgba(77, 163, 255, ${0.1 * (1 - dist / 180)})`;
             ctx.lineWidth = 0.5;
             ctx.stroke();
           }
         }
       }
 
-      // Draw particles
       for (const p of particles) {
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(126, 184, 201, ${0.3 + p.r * 0.15})`;
+        ctx.fillStyle = `rgba(77, 163, 255, ${0.2 + p.r * 0.1})`;
         ctx.fill();
 
-        // Glow
         if (p.r > 2) {
           ctx.beginPath();
           ctx.arc(p.x, p.y, p.r * 3, 0, Math.PI * 2);
           const grad = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.r * 3);
-          grad.addColorStop(0, 'rgba(126, 184, 201, 0.15)');
-          grad.addColorStop(1, 'rgba(126, 184, 201, 0)');
+          grad.addColorStop(0, 'rgba(77, 163, 255, 0.12)');
+          grad.addColorStop(1, 'rgba(77, 163, 255, 0)');
           ctx.fillStyle = grad;
           ctx.fill();
         }
 
-        // Move
         p.x += p.vx;
         p.y += p.vy;
         if (p.x < 0 || p.x > w) p.vx *= -1;
@@ -221,7 +185,7 @@
       requestAnimationFrame(draw);
     }
 
-    window.addEventListener('resize', () => { resize(); });
+    window.addEventListener('resize', resize);
     init();
     draw();
   </script>
